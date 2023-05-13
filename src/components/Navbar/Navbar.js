@@ -5,52 +5,43 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
-import { songs } from '../../utils/data';
 
 const drawerWidth = 240;
 
 const Navbar = (props) => {
 
-  const { window } = props;
+  const { window, songs, handleClick, selectedSong } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
-  const [selectedSong, setSelectedSong] = useState("");
 
   useEffect (() => {
       document.title = selectedSong ? `${selectedSong}` : ``;
   }, [selectedSong]);
 
-  const handleClick = (title) => {
-    setSelectedSong(title);
-  }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const drawer = (
-    <div>
-      <Toolbar />
+    <div style={{background: "linear-gradient(#2d294d, #111111)"}}>
+      <Toolbar/>
       <Divider />
       <List sx={{ flexDirection: { sx: "column", md: "row" } }}>
         {songs.map((song) => (
-          <ListItem key={song.id} disablePadding onClick={() => handleClick(song.title)}>
+          <ListItem key={song.id} disablePadding onClick={() => handleClick(song.title, song.id)}>
             <ListItemButton sx={{ flexDirection: "column"}}>
               <img src={song.image} style={{height: "90%", width: "90%"}}/>
-              <ListItemText primary={song.title} />
+              <ListItemText primary={song.title} sx={{color: "white"}}/>
             </ListItemButton>
           </ListItem>
         ))}
@@ -70,9 +61,9 @@ const Navbar = (props) => {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{background: "black", color: "white"}}>
           <IconButton
-            color="inherit"
+            color="white"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
